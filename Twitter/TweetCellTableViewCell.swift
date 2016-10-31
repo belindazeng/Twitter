@@ -37,9 +37,7 @@ class TweetCellTableViewCell: UITableViewCell {
             if (tweet.user?.screenName) != nil {
                 screenNameLabel.text = tweet.user?.screenName as String?
             }
-            print("in cell")
-            print(tweet.favoritesCount)
-            
+ 
             starCountLabel.text = String(tweet.favoritesCount)
             retweetCountLabel.text = String(tweet.retweetCount)
         }

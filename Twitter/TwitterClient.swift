@@ -47,7 +47,7 @@ class TwitterClient: BDBOAuth1SessionManager {
                 self.loginFailure?(error)
             })
             //
-            TwitterClient.sharedInstance.homeTimeline(success: { (tweets: [Tweet]) in
+            TwitterClient.sharedInstance.homeTimeline(count: "20", success: { (tweets: [Tweet]) in
                 print(tweets)
             }, failure: { (error: Error) in
                 print(error.localizedDescription)
@@ -62,8 +62,8 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func homeTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
-        get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (_:  URLSessionDataTask, response: Any?) -> Void in
+    func homeTimeline(count: String, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        get("1.1/statuses/home_timeline.json", parameters: ["count": count], progress: nil, success: { (_:  URLSessionDataTask, response: Any?) -> Void in
             if let tweetsDictionary = response as? [NSDictionary] {
                 let tweets = Tweet.tweetsWithArray(dictionaries: tweetsDictionary)
                 success(tweets)
@@ -161,8 +161,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             if let responseDictionary = response as? NSDictionary {
                 let tweet = Tweet(dictionary: responseDictionary
                 )
-                print(response)
-                print(tweet)
                 success(tweet)
             }}, failure: { (_: URLSessionDataTask?, error: Error) in
                 print(error)

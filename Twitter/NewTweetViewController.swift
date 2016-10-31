@@ -8,6 +8,9 @@
 
 import UIKit
 import AFNetworking
+@objc protocol NewTweetViewControllerDelegate {
+    @objc optional func newTweetViewController(newTweetViewController: NewTweetViewController, didUpdateTweet value: Tweet)
+}
 
 class NewTweetViewController: UIViewController, UITextViewDelegate {
 
@@ -20,6 +23,8 @@ class NewTweetViewController: UIViewController, UITextViewDelegate {
     
     var tweet: Tweet?
     
+    weak var delegate: NewTweetViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -29,14 +34,13 @@ class NewTweetViewController: UIViewController, UITextViewDelegate {
         if let screenName = User.currentUser?.screenName as? String {
             screenNameLabel.text = screenName
         }
-        print(tweetTextView.text)
         tweetTextView.text = ""
         
         tweetTextView.delegate = self
         
         // if we came from a reply, prepopulate author
         if let tweet = self.tweet {
-            print("getting here")
+            print("getting here in new tweet controller")
             if let name = tweet.user?.screenName as? String {
                 tweetTextView.text = "@" + name + " "
             }
@@ -58,25 +62,38 @@ class NewTweetViewController: UIViewController, UITextViewDelegate {
         if let text = tweetTextView.text as? String {
             let tweet_id = self.tweet?.id ?? nil
             TwitterClient.sharedInstance.createTweet(in_reply_to_status_id: tweet_id,status: text, success: { (tweet: Tweet) in
-                print("successfully created tweet!")
+                    print("successfully created tweet!")
+                // update tweet so we have access to it in prepare for segue 
+                    self.tweet = tweet
+                    if let tweet = self.tweet {
+                        print("hit reply button and tweet exists")
+                        self.delegate?.newTweetViewController?(newTweetViewController: self, didUpdateTweet: tweet)
+                    }
                 }, failure: {(error: Error) -> () in
                     print(error.localizedDescription)
             })
             
         }
+//        // test this instead of doing delegates sigh
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let destinationNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController") as! UINavigationController
+//        let tweetViewController = destinationNavigationController.topViewController as! TweetsViewController
+//        
+//        if let tweet = self.tweet {
+//            tweetViewController.tweets.insert(tweet, at: 0)
+////        }
+//        if let tweet = self.tweet {
+//            print("hit reply button and tweet exists")
+//            delegate?.newTweetViewController?(newTweetViewController: self, didUpdateTweet: tweet)
+//        }
+//        
+        
         dismiss(animated: true, completion: nil)
         
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
+ 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         var newLength = 0
         if let text = textView.text?.utf16 {

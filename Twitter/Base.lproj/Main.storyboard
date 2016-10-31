@@ -64,7 +64,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="103"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x6a-Sn-bKx" id="cWO-BU-0OZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="faW-3a-TZm">
@@ -203,7 +203,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="npm-MT-dPM">
                             <connections>
-                                <segue destination="Waf-zk-l1i" kind="presentation" id="bOX-yn-OMS"/>
+                                <action selector="onAddButton:" destination="LO1-A8-gcU" id="1qY-qC-wUO"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -454,7 +454,7 @@
         <!--Navigation Controller-->
         <scene sceneID="xoc-wM-mVc">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Waf-zk-l1i" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NewTweetNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Waf-zk-l1i" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xrS-aT-v1n">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -475,7 +475,4 @@
         <image name="reply" width="66" height="46"/>
         <image name="retweet" width="82" height="50"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="bOX-yn-OMS"/>
-    </inferredMetricsTieBreakers>
 </document>
