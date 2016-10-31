@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         if User.currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+            let vc = storyboard.instantiateViewController(withIdentifier: "TweetsTabBarController")
             window?.rootViewController = vc
         }
         
@@ -37,6 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor(red: 68.0/255.0, green: 165.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        
+        // tab bar controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarViewController = storyboard.instantiateViewController(withIdentifier: "TweetsTabBarController") as! UITabBarController
+        if let items = tabBarViewController.tabBar.items {
+            items[0].image = #imageLiteral(resourceName: "blueTwitterBirdSmall")
+            print(items[0].image)
+        }
         
         return true
     }

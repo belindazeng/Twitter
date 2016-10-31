@@ -21,8 +21,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="whiteTwitterBird" translatesAutoresizingMaskIntoConstraints="NO" id="xmq-z6-49p">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whiteTwitterBird" translatesAutoresizingMaskIntoConstraints="NO" id="xmq-z6-49p">
                                 <rect key="frame" x="157" y="277" width="61" height="51"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="51" id="8hy-jn-exJ"/>
+                                    <constraint firstAttribute="width" constant="61" id="aSY-AG-31l"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.40784313725490196" green="0.69019607843137254" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
