@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = vc
         }
         
+        
         // check for logout
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil, queue: OperationQueue.main, using: {(Notification) -> Void in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -31,6 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = vc
         
         })
+        
+        // change navigation controller
+        UINavigationBar.appearance().barTintColor = UIColor(red: 68.0/255.0, green: 165.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        
         return true
     }
 

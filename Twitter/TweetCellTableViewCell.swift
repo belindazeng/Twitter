@@ -40,17 +40,24 @@ class TweetCellTableViewCell: UITableViewCell {
  
             starCountLabel.text = String(tweet.favoritesCount)
             retweetCountLabel.text = String(tweet.retweetCount)
+            
+            dateLabel.text = tweet.dateStr
         }
     }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        
+        // add rounded corners
+        profileImageView.layer.cornerRadius = 3
+        profileImageView.clipsToBounds = true
     }
     
     @IBAction func onRetweetButton(_ sender: Any) {

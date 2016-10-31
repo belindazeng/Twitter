@@ -42,8 +42,8 @@ class TweetDetailViewController: UIViewController {
         favoriteCountLabel.text = String(tweet.favoritesCount)
         retweetCountLabel.text = String(tweet.retweetCount)
         
-        if let date = tweet.timestamp {
-            dateLabel.text = String(describing: date)
+        if let date = tweet.dateStr {
+            dateLabel.text = date + " ago"
         }
         
     }

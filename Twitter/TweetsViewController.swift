@@ -82,7 +82,35 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func onLogoutButton(_ sender: Any) {
         TwitterClient.sharedInstance.logout()
     }
-
+    
+    // swipe action
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCellTableViewCell") as! TweetCellTableViewCell
+            let tweet = self.tweets[indexPath.row]
+            
+            
+            // remove from our array immediately
+            self.tweets.remove(at: indexPath.row)
+            
+            tableView.reloadData()
+            if let tweetId = tweet.id as? String {
+                TwitterClient.sharedInstance.deleteTweet(id: tweetId, success: {(tweet: Tweet) -> () in
+                }, failure: { (error: Error) in
+                    
+                })
+            }
+        }
+        delete.backgroundColor = UIColor.red
+        
+        return [delete]
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        // you need to implement this method too or you can't swipe to display the actions
+    }
     
 //     MARK: - Navigation
 //     

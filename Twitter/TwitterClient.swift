@@ -85,6 +85,20 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
+    func deleteTweet(id: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
+        let url = "1.1/statuses/destroy/" + id + ".json"
+        post(url, parameters: nil, progress: nil, success: { (_:  URLSessionDataTask, response: Any?) -> Void in
+            if let responseDictionary = response as? NSDictionary {
+                let tweet = Tweet(dictionary: responseDictionary
+                )
+                success(tweet)
+            }}, failure: { (_: URLSessionDataTask?, error: Error) in
+                print(error)
+                failure(error)
+        })
+        
+    }
+    
     func retweet(id: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
         let url = "1.1/statuses/retweet/" + id + ".json"
         post(url, parameters: nil, progress: nil, success: { (_:  URLSessionDataTask, response: Any?) -> Void in
@@ -113,6 +127,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
         
     }
+    
     
     func favorite(id: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
         let url = "1.1/favorites/create.json"
