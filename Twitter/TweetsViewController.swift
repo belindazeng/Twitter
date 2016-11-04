@@ -19,6 +19,29 @@ extension CGRect{
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, NewTweetViewControllerDelegate {
     var tweets = [Tweet]()
     
+    @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
+
+    
+    @IBAction func profileTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
+        print("tapped")
+        // trigger segue
+        if let image = sender.view as? UIImageView {
+            let cell = image.superview!.superview as! TweetCellTableViewCell
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let navigationViewController = storyboard.instantiateViewController(withIdentifier: "ProfileNavigationController") as! UINavigationController
+            // pass the data
+            if let profileViewController = navigationViewController.topViewController as? ProfileViewController {
+                profileViewController.user = cell.tweet.user
+                self.show(profileViewController, sender: self)
+//                self.present(profileViewController, animated: true, completion: {
+//                })
+            }
+            // segue to the navigation controller
+           
+//            self.performSegue(withIdentifier: "ProfileNavigationController", sender: self)
+            
+        }
+    }
     let DEFAULT_NUM_TWEETS = "20"
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -49,6 +72,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // setup infinte scroll view
         setupInfiniteScrollView()
         //
+        
+        tapGestureRecognizer.isEnabled = true
         
     }
     

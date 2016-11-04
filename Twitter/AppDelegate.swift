@@ -20,7 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         if User.currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "TweetsTabBarController")
+            let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerViewController")
+            
+            let hamburgerViewController = vc as! HamburgerViewController
+            let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+            menuViewController.hamburgerViewController = hamburgerViewController
+            hamburgerViewController.menuViewController = menuViewController
+            // was tabbarcontroller
+            
             window?.rootViewController = vc
         }
         
@@ -41,10 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // tab bar controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarViewController = storyboard.instantiateViewController(withIdentifier: "TweetsTabBarController") as! UITabBarController
-        if let items = tabBarViewController.tabBar.items {
-            items[0].image = #imageLiteral(resourceName: "blueTwitterBirdSmall")
-            print(items[0].image)
-        }
+//        if let items = tabBarViewController.tabBar.items {
+//            items[0].image = #imageLiteral(resourceName: "blueTwitterBirdSmall")
+//            print(items[0].image)
+//        }
         
         return true
     }
