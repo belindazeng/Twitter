@@ -42,6 +42,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
         }
     }
+    
     let DEFAULT_NUM_TWEETS = "20"
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -103,7 +104,32 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCellTableViewCell") as! TweetCellTableViewCell
         cell.tweet = tweets[indexPath.row]
+        cell.profileImageView.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(TweetsViewController.handleTap))
+//        tapGestureRecognizer.addTarget(self, action:#selector(TweetsViewController.profileTapGestureRecognizer as (TweetsViewController) -> () -> ()))
+        cell.profileImageView?.addGestureRecognizer(tap)
         return cell
+    }
+    func handleTap(sender: UITapGestureRecognizer) {
+        print("tapped")
+        if let image = sender.view as? UIImageView {
+            let cell = image.superview!.superview as! TweetCellTableViewCell
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let navigationViewController = storyboard.instantiateViewController(withIdentifier: "ProfileNavigationController") as! UINavigationController
+            // pass the data
+            if let profileViewController = navigationViewController.topViewController as? ProfileViewController {
+                profileViewController.user = cell.tweet.user
+                self.show(profileViewController, sender: self)
+                //                self.present(profileViewController, animated: true, completion: {
+                //                })
+            }
+            // segue to the navigation controller
+            
+            //            self.performSegue(withIdentifier: "ProfileNavigationController", sender: self)
+            
+        }
+
     }
 
     @IBAction func onLogoutButton(_ sender: Any) {
